@@ -1,0 +1,36 @@
+t01 — installing pipx (Ubuntu package, extracted on the shared lab machine)
+
+On your own Ubuntu machine the whole step is one line:
+    sudo apt install pipx
+The lab machine is shared and its package lock was held by
+another user every time we tried, so the lab downloaded the
+same two .deb packages apt would have used and unpacked them
+into a scratch folder — the identical files, run in place.
+
+$ apt-cache policy pipx
+pipx:
+  Installed: (none)
+  Candidate: 1.4.3-1
+  Version table:
+     1.4.3-1 500
+        500 http://azure.archive.ubuntu.com/ubuntu noble/universe amd64 Packages
+        500 http://mirror.cogentco.com/pub/linux/ubuntu noble/universe amd64 Packages
+[exit 0]
+
+$ sudo apt-get install -y pipx
+E: Could not get lock /var/lib/dpkg/lock-frontend. It is held by process 38778 (apt-get)
+E: Unable to acquire the dpkg frontend lock (/var/lib/dpkg/lock-frontend), is another process using it?
+[exit 100]
+
+$ apt-get download pipx python3-userpath
+[exit 0]
+
+$ dpkg-deb -x pipx_1.4.3-1_all.deb rootfs
+[exit 0]
+
+$ dpkg-deb -x python3-userpath_1.9.1-1_all.deb rootfs
+[exit 0]
+
+$ pipx --version
+1.4.3
+[exit 0]

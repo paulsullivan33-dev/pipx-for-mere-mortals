@@ -1,0 +1,100 @@
+t06 — proving the isolation: two tools, two worlds, system untouched
+
+$ pipx list
+venvs are in /home/hatch/.local/share/pipx/venvs
+apps are exposed on your $PATH at /home/hatch/.local/bin
+manual pages are exposed at /home/hatch/.local/share/man
+   package httpie 3.2.2, installed using Python 3.12.3
+    - http
+    - httpie
+    - https
+    - man1/http.1
+    - man1/httpie.1
+    - man1/https.1
+   package pycowsay 0.0.0.2, installed using Python 3.12.3
+    - pycowsay
+    - man6/pycowsay.6
+[exit 0]
+
+The system Python has never heard of either tool:
+
+$ python3 -c "import httpie"
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+ModuleNotFoundError: No module named 'httpie'
+[exit 1]
+
+$ python3 -c "import pycowsay"
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+ModuleNotFoundError: No module named 'pycowsay'
+[exit 1]
+
+Each tool's own Python knows its own packages:
+
+$ /home/hatch/.local/share/pipx/venvs/httpie/bin/python -c "import httpie, requests; print('httpie venv sees httpie', httpie.__version__, 'and requests', requests.__version__)"
+httpie venv sees httpie 3.2.2 and requests 2.34.2
+[exit 0]
+
+$ /home/hatch/.local/share/pipx/venvs/pycowsay/bin/python -c "import pycowsay; print('pycowsay venv sees pycowsay')"
+pycowsay venv sees pycowsay
+[exit 0]
+
+And neither tool can see the other's world:
+
+$ /home/hatch/.local/share/pipx/venvs/pycowsay/bin/python -c "import requests"
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+ModuleNotFoundError: No module named 'requests'
+[exit 1]
+
+$ /home/hatch/.local/share/pipx/venvs/httpie/bin/python -c "import pycowsay"
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+ModuleNotFoundError: No module named 'pycowsay'
+[exit 1]
+
+What is inside one venv — its own private library shelf:
+
+$ ls /home/hatch/.local/share/pipx/venvs/httpie/lib/python3.12/site-packages
+PySocks-1.7.1.dist-info
+__pycache__
+_distutils_hack
+certifi
+certifi-2026.10.23.dist-info
+charset_normalizer
+charset_normalizer-3.5.2.dist-info
+defusedxml
+defusedxml-0.7.1.dist-info
+distutils-precedence.pth
+httpie
+httpie-3.2.2.dist-info
+idna
+idna-3.20.dist-info
+markdown_it
+markdown_it_py-4.2.0.dist-info
+mdurl
+mdurl-0.1.2.dist-info
+multidict
+multidict-7.2.1.dist-info
+pipx_shared.pth
+pygments
+pygments-2.21.0.dist-info
+requests
+requests-2.34.2.dist-info
+requests_toolbelt
+requests_toolbelt-1.0.0.dist-info
+rich
+rich-15.0.0.dist-info
+setuptools
+setuptools-84.2.1.dist-info
+socks.py
+sockshandler.py
+urllib3
+urllib3-2.8.0.dist-info
+[exit 0]
+
+$ du -sh /home/hatch/.local/share/pipx/venvs/pycowsay /home/hatch/.local/share/pipx/venvs/httpie
+108K	/home/hatch/.local/share/pipx/venvs/pycowsay
+28M	/home/hatch/.local/share/pipx/venvs/httpie
+[exit 0]

@@ -1,0 +1,21 @@
+t03 — pipx run: a tool for one command, nothing installed
+
+$ pipx list
+nothing has been installed with pipx 😴
+[exit 0]
+
+$ pipx run pycowsay "run once, keep nothing"
+creating virtual environment...
+creating shared libraries...
+upgrading shared libraries...
+installing pycowsay...
+
+  ----------------------
+< run once, keep nothing >
+  ----------------------
+   \   ^__^
+    \  (oo)\_______
+       (__)\       )\/\
+           ||----w |
+           ||     ||
+

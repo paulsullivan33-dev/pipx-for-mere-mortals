@@ -1,0 +1,34 @@
+t08 — keeping tools fresh: upgrade one, ask about all
+
+$ http --version
+3.2.2
+[exit 0]
+
+$ pipx upgrade httpie
+upgrading shared libraries...
+upgrading httpie...
+upgraded package httpie from 3.2.2 to 3.2.4 (location:
+/home/hatch/.local/share/pipx/venvs/httpie)
+[exit 0]
+
+$ http --version
+3.2.4
+[exit 0]
+
+Already current is a normal answer, not an error:
+
+$ pipx upgrade pycowsay
+upgrading shared libraries...
+upgrading pycowsay...
+pycowsay is already at latest version 0.0.0.2 (location:
+/home/hatch/.local/share/pipx/venvs/pycowsay)
+[exit 0]
+
+And the whole shelf at once:
+
+$ pipx upgrade-all
+upgrading shared libraries...
+upgrading pycowsay...
+upgrading httpie...
+Versions did not change after running 'pipx upgrade' for each package 😴
+[exit 0]

@@ -1,0 +1,47 @@
+t04 — pipx install: a tool moves in, and the shim that reaches it
+
+$ pipx install pycowsay
+creating virtual environment...
+installing pycowsay...
+done! ✨ 🌟 ✨
+  installed package pycowsay 0.0.0.2, installed using Python 3.12.3
+  These apps are now globally available
+    - pycowsay
+  These manual pages are now globally available
+    - man6/pycowsay.6
+[exit 0]
+
+$ ls -l /home/hatch/.local/bin/pycowsay
+lrwxrwxrwx 1 root nogroup 57 Oct 30 06:02 /home/hatch/.local/bin/pycowsay -> /home/hatch/.local/share/pipx/venvs/pycowsay/bin/pycowsay
+[exit 0]
+
+$ readlink /home/hatch/.local/bin/pycowsay
+/home/hatch/.local/share/pipx/venvs/pycowsay/bin/pycowsay
+[exit 0]
+
+$ head -1 /home/hatch/.local/share/pipx/venvs/pycowsay/bin/pycowsay
+#!/home/hatch/.local/share/pipx/venvs/pycowsay/bin/python
+[exit 0]
+
+$ pycowsay "installed, and on the PATH"
+
+  --------------------------
+< installed, and on the PATH >
+  --------------------------
+   \   ^__^
+    \  (oo)\_______
+       (__)\       )\/\
+           ||----w |
+           ||     ||
+
+[exit 0]
+
+$ ls /home/hatch/.local/share/pipx/venvs/pycowsay
+bin
+include
+lib
+lib64
+pipx_metadata.json
+pyvenv.cfg
+share
+[exit 0]

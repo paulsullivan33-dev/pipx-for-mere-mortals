@@ -1,0 +1,59 @@
+t07 — pipx inject: a guest moves into one tool's world, and only there
+
+$ pipx inject pycowsay cowsay
+installing cowsay...
+done! ✨ 🌟 ✨
+  injected package cowsay into venv pycowsay
+[exit 0]
+
+$ pipx list
+venvs are in /home/hatch/.local/share/pipx/venvs
+apps are exposed on your $PATH at /home/hatch/.local/bin
+manual pages are exposed at /home/hatch/.local/share/man
+   package httpie 3.2.2, installed using Python 3.12.3
+    - http
+    - httpie
+    - https
+    - man1/http.1
+    - man1/httpie.1
+    - man1/https.1
+   package pycowsay 0.0.0.2, installed using Python 3.12.3
+    - pycowsay
+    - man6/pycowsay.6
+[exit 0]
+
+The guest is importable inside pycowsay's world...
+
+$ /home/hatch/.local/share/pipx/venvs/pycowsay/bin/python -c "import cowsay; cowsay.cow('a guest in the pycowsay venv')"
+  ____________________________
+| a guest in the pycowsay venv |
+  ============================
+                            \
+                             \
+                               ^__^
+                               (oo)\_______
+                               (__)\       )\/\
+                                   ||----w |
+                                   ||     ||
+[exit 0]
+
+...and nowhere else:
+
+$ /home/hatch/.local/share/pipx/venvs/httpie/bin/python -c "import cowsay"
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+ModuleNotFoundError: No module named 'cowsay'
+[exit 1]
+
+$ python3 -c "import cowsay"
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+ModuleNotFoundError: No module named 'cowsay'
+[exit 1]
+
+Plain pipx list does not itemise guests; the record lives in
+the venv's own metadata file:
+
+$ python3 -c "import json; m=json.load(open('/home/hatch/.local/share/pipx/venvs/pycowsay/pipx_metadata.json')); print(list(m['injected_packages']))"
+['cowsay']
+[exit 0]

@@ -1,0 +1,38 @@
+t05 — a bigger tool: httpie, pinned to an older version on purpose
+
+$ pipx install httpie==3.2.2
+creating virtual environment...
+installing httpie from spec 'httpie==3.2.2'...
+done! ✨ 🌟 ✨
+  installed package httpie 3.2.2, installed using Python 3.12.3
+  These apps are now globally available
+    - http
+    - httpie
+    - https
+  These manual pages are now globally available
+    - man1/http.1
+    - man1/httpie.1
+    - man1/https.1
+[exit 0]
+
+$ http --version
+3.2.2
+[exit 0]
+
+$ https --version
+3.2.2
+[exit 0]
+
+A real request, against a throwaway file server on this machine.
+(--ignore-stdin: in a script, httpie otherwise waits to read a
+request body from standard input. Chapter 14 tells that story.)
+
+$ http --ignore-stdin --headers GET http://127.0.0.1:8901/t01.sh
+HTTP/1.0 200 OK
+Server: SimpleHTTP/0.6 Python/3.12.3
+Date: Fri, 30 Oct 2026 06:05:23 GMT
+Content-type: text/x-sh
+Content-Length: 805
+Last-Modified: Fri, 30 Oct 2026 06:01:33 GMT
+
+[exit 0]

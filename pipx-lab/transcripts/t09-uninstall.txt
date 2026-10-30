@@ -1,0 +1,68 @@
+t09 — removing tools: the shim, the world, and the guest all leave
+
+$ pipx uninstall pycowsay
+uninstalled pycowsay! ✨ 🌟 ✨
+[exit 0]
+
+$ ls -l /home/hatch/.local/bin/pycowsay
+ls: cannot access '/home/hatch/.local/bin/pycowsay': No such file or directory
+[exit 2]
+
+$ ls /home/hatch/.local/share/pipx/venvs
+httpie
+[exit 0]
+
+$ which pycowsay
+[exit 1]
+
+$ pipx list
+venvs are in /home/hatch/.local/share/pipx/venvs
+apps are exposed on your $PATH at /home/hatch/.local/bin
+manual pages are exposed at /home/hatch/.local/share/man
+   package httpie 3.2.4, installed using Python 3.12.3
+    - http
+    - httpie
+    - https
+    - man1/http.1
+    - man1/httpie.1
+    - man1/https.1
+[exit 0]
+
+Removing everything at once (the injected cowsay guest already
+left with its host above — a guest has no life of its own):
+
+$ pipx uninstall-all
+uninstalled httpie! ✨ 🌟 ✨
+[exit 0]
+
+$ pipx list
+nothing has been installed with pipx 😴
+[exit 0]
+
+$ ls /home/hatch/.local/share/pipx/venvs
+[exit 0]
+
+$ ls /home/hatch/.local/bin
+env
+env.fish
+get_gprof
+get_objgraph
+ghp-import
+isort
+isort-identify-imports
+markdown_py
+mkdocs
+mkdocs-get-deps
+pybabel
+pygmentize
+pylint
+pylint-config
+pyreverse
+python3.11
+python3.13
+symilar
+undill
+uv
+uvx
+watchmedo
+[exit 0]

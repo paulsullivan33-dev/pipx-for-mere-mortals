@@ -1,0 +1,50 @@
+t02 — putting the shim folder on PATH, and pipx's own map of itself
+
+$ bash -c echo $PATH
+/opt/hatch/bin:/opt/hatch-image/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/muse/skills/documents/scripts:/opt/muse/skills/generate_podcast/scripts:/opt/muse/skills/style-tryon/scripts
+[exit 0]
+
+$ grep -c local/bin /home/hatch/.bashrc
+grep: /home/hatch/.bashrc: No such file or directory
+[exit 2]
+
+$ pipx ensurepath
+Success! Added /home/hatch/.local/bin to the PATH environment variable.
+
+Consider adding shell completions for pipx. Run 'pipx completions' for
+instructions.
+
+You will need to open a new terminal or re-login for the PATH changes to take
+effect.
+
+Otherwise pipx is ready to go! ✨ 🌟 ✨
+[exit 0]
+
+$ grep -A1 pipx /home/hatch/.bashrc
+# Created by `pipx` on 2026-10-30 06:01:37
+export PATH="$PATH:/home/hatch/.local/bin"
+[exit 0]
+
+$ pipx environment
+Environment variables (set by user):
+
+PIPX_HOME=
+PIPX_BIN_DIR=
+PIPX_MAN_DIR=
+PIPX_SHARED_LIBS=
+PIPX_DEFAULT_PYTHON=
+USE_EMOJI=
+
+Derived values (computed by pipx):
+
+PIPX_HOME=/home/hatch/.local/share/pipx
+PIPX_BIN_DIR=/home/hatch/.local/bin
+PIPX_MAN_DIR=/home/hatch/.local/share/man
+PIPX_SHARED_LIBS=/home/hatch/.local/share/pipx/shared
+PIPX_LOCAL_VENVS=/home/hatch/.local/share/pipx/venvs
+PIPX_LOG_DIR=/home/hatch/.local/state/pipx/log
+PIPX_TRASH_DIR=/home/hatch/.local/share/pipx/trash
+PIPX_VENV_CACHEDIR=/home/hatch/.cache/pipx
+PIPX_DEFAULT_PYTHON=/usr/bin/python3
+USE_EMOJI=true
+[exit 0]
